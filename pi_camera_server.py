@@ -90,7 +90,7 @@ class CameraWebHandler(BaseHTTPRequestHandler):
             </head>
             <body>
                 <div class="container">
-                    <h1>🍓 Pi Camera Viewer</h1>
+                    <h1>Pi Camera Viewer</h1>
                     <div class="info">
                         <strong>Last photo taken:</strong> {get_photo_timestamp()}
                     </div>
@@ -98,8 +98,8 @@ class CameraWebHandler(BaseHTTPRequestHandler):
                         <img src="/photo" alt="Pi Camera Photo" id="photo">
                     </div>
                     <div class="buttons">
-                        <button onclick="takeNewPhoto()">📸 Take New Photo</button>
-                        <button onclick="refreshPhoto()">🔄 Refresh</button>
+                        <button onclick="takeNewPhoto()">Take New Photo</button>
+                        <button onclick="refreshPhoto()">Refresh</button>
                     </div>
                 </div>
                 
@@ -177,13 +177,13 @@ def setup_camera():
         result = os.system(test_cmd)
         if result == 0:
             os.remove("/tmp/test_cam.jpg")
-            print("✅ Camera test successful")
+            print("Camera test successful")
             return True
         else:
-            print("❌ Camera test failed")
+            print("Camera test failed")
             return False
     except Exception as e:
-        print(f"❌ Camera setup error: {e}")
+        print(f"Camera setup error: {e}")
         return False
 
 def capture_photo():
@@ -193,19 +193,19 @@ def capture_photo():
     try:
         # Use libcamera-still for Bookworm
         cmd = f"libcamera-still --output {photo_path} --width 1640 --height 1232 --timeout 2000 --immediate"
-        print(f"�� Capturing photo: {cmd}")
+        print(f"Capturing photo: {cmd}")
         
         result = os.system(cmd)
         
         if result == 0 and os.path.exists(photo_path):
-            print(f"✅ Photo saved: {photo_path}")
+            print(f"Photo saved: {photo_path}")
             return True
         else:
-            print(f"❌ Photo capture failed (exit code: {result})")
+            print(f"Photo capture failed (exit code: {result})")
             return False
             
     except Exception as e:
-        print(f"❌ Error capturing photo: {e}")
+        print(f"Error capturing photo: {e}")
         return False
 
 def get_photo_timestamp():
@@ -230,18 +230,18 @@ def get_local_ip():
 
 def main():
     """Main function to start the camera web server"""
-    print("🍓 Pi Camera Web Server Starting...")
+    print("Pi Camera Web Server Starting...")
     print("=" * 50)
     
     # Setup camera
     if not setup_camera():
-        print("❌ Camera setup failed. Please check your camera connection.")
+        print("Camera setup failed. Please check your camera connection.")
         return
     
     # Take initial photo
-    print("📸 Taking initial photo...")
+    print("Taking initial photo...")
     if not capture_photo():
-        print("⚠️  Initial photo capture failed, but server will start anyway")
+        print("Initial photo capture failed, but server will start anyway")
     
     # Start web server
     server_address = ('', SERVER_PORT)
@@ -249,11 +249,11 @@ def main():
     
     local_ip = get_local_ip()
     
-    print(f"\n🌐 Web server started!")
-    print(f"📱 Access your camera at:")
+    print(f"\nWeb server started!")
+    print(f"Access your camera at:")
     print(f"   • Local: http://localhost:{SERVER_PORT}")
     print(f"   • Network: http://{local_ip}:{SERVER_PORT}")
-    print(f"\n💡 Tips:")
+    print(f"\nTips:")
     print(f"   • Click 'Take New Photo' to capture a new image")
     print(f"   • Page auto-refreshes every 30 seconds")
     print(f"   • Press Ctrl+C to stop the server")
@@ -262,7 +262,7 @@ def main():
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\n\n🛑 Server stopped by user")
+        print("\n\nServer stopped by user")
         httpd.server_close()
 
 if __name__ == "__main__":
