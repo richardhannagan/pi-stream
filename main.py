@@ -1,1 +1,1 @@
-print("Hello from Pi!")
+print("script works")
